@@ -2,6 +2,7 @@ package controllers;
 
 import models.AvailableRooms;
 import models.Booking;
+import models.User;
 import org.jboss.logging.Logger;
 import org.wildfly.swarm.spi.runtime.annotations.ConfigurationValue;
 import services.ControllerService;
@@ -13,6 +14,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("/")
@@ -45,6 +47,22 @@ public class IndexController {
         //TODO change return type to available rooms to format it better
         return controllerService.getAllBookings();
     }
+
+    @GET
+    @Path("/user/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public User findById(@PathParam("id") long id) {
+        return controllerService.getUser(id);
+    }
+
+    @GET
+    @Path("/user/{id}/token")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getToken(@PathParam("id") long id) {
+        return controllerService.getToken(id);
+    }
+
+
 
     //TODO remember to verify token before every request except login/logout
     //TODO get available times

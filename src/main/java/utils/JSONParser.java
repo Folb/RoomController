@@ -52,4 +52,12 @@ public class JSONParser {
         Type listType = new TypeToken<ArrayList<Booking>>(){}.getType();
         return gson.fromJson(jsonArray, listType);
     }
+
+    public static Boolean parseVerification(String json){
+        return gson.fromJson(json, Boolean.class);
+    }
+
+    public static String parseToken(String json){
+        return gson.fromJson(json, String.class);
+    }
 }

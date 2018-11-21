@@ -2,6 +2,7 @@ package services;
 
 
 import models.Booking;
+import models.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.io.IOException;
@@ -22,4 +23,18 @@ public class ControllerService {
 
     //TODO requests to services
 
+    public User getUser(long id){
+        try {
+            return LoginRequests.getUser(id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public String getToken(long id){
+        User user = getUser(id);
+        return null;
+    }
 }
