@@ -36,29 +36,33 @@ public class AvailableRooms<T> {
 
 
             for (Room room : roomsByRoomId) {
-                Timeslot t = new Timeslot(room.getPublicStartDate(), room.getPublicEndDate());
-                if (bookingsByRoomId == null && roomsByRoomId != null)  {
-                    availableRooms.get(roomId).add(t);
-                    continue;
-                } else if (roomsByRoomId == null) {
-                    continue;
-                }
-                boolean free = true;
-                for (Booking booking : bookingsByRoomId) {
-                    LocalDateTime s = booking.getStartDate();
-                    try {
-                        if (t.isWithinTimeslot(s)) {
-                            t.setEndDate(s.minusMinutes(1));
-                            availableRooms.get(roomId).add(t);
-                            t.setStartDate(booking.getEndDate().plusMinutes(1));
-                            t.setEndDate(room.getPublicEndDate());
-                            free = false;
-                        }
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
+                List<PublicDate> datesByRoom = room.getPublicDates();
+                for (PublicDate publicDate : datesByRoom) {
+                    Timeslot t = new Timeslot(publicDate.getPublicStartDate(), publicDate.getPublicEndDate());
+                    if (bookingsByRoomId == null && roomsByRoomId != null)  {
+                        availableRooms.get(roomId).add(t);
+                        continue;
+                    } else if (roomsByRoomId == null) {
+                        continue;
                     }
+                    boolean free = true;
+                    for (Booking booking : bookingsByRoomId) {
+                        LocalDateTime s = booking.getStartDate();
+                        try {
+                            if (t.isWithinTimeslot(s)) {
+                                t.setEndDate(s.minusMinutes(1));
+                                availableRooms.get(roomId).add(t);
+                                t.setStartDate(booking.getEndDate().plusMinutes(1));
+                                t.setEndDate(publicDate.getPublicEndDate());
+                                free = false;
+                            }
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (free) availableRooms.get(roomId).add(t);
                 }
-                if (free) availableRooms.get(roomId).add(t);
+
             }
         }
     }
