@@ -13,10 +13,10 @@ public class BookingRequests extends Request {
     //TODO change port number
     private static final String BASE_URL = "http://localhost:8080/";
     private static final String ALL = "all";
-    private final String IS_BOOKED = "isBooked/";
-    private final String BOOK_ROOM = "bookRoom";
-    private final String USER = "user/";
-    private final String BOOKINGS = "/bookings";
+    private static final String IS_BOOKED = "isBooked/";
+    private static final String BOOK_ROOM = "bookRoom";
+    private static final String USER = "user/";
+    private static final String BOOKINGS = "/bookings";
 
     public static List<Booking> getAllBookings() throws IOException {
         URL url = new URL(BASE_URL + ALL);
@@ -26,6 +26,12 @@ public class BookingRequests extends Request {
         con.disconnect();
 
         return JSONParser.parseBookingList(response);
+    }
+
+    public static Booking bookRoom() throws IOException {
+        URL url = new URL(BASE_URL + USER);
+        HttpURLConnection con = initPostRequest(url);
+        con.
     }
 
 }
