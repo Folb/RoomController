@@ -9,10 +9,7 @@ import services.ControllerService;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @Path("/")
@@ -57,6 +54,35 @@ public class IndexController {
         return controllerService.getToken(id);
     }
 
+    @POST
+    @Path("/verify")
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean getVerificationVal(@HeaderParam("email") String email, @HeaderParam("token") String token) {
+        return controllerService.getVerificationVal(email, token);
+    }
+
+    @POST
+    @Path("/login")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String login(@HeaderParam("email") String email, @HeaderParam("pwd") String pwd) {
+        return controllerService.loginUser(email, pwd);
+    }
+
+    @POST
+    @Path("/logout")
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean logout(@HeaderParam("email") String email, @HeaderParam("token") String token) {
+        return controllerService.logoutUser(email, token);
+    }
+
+    @POST
+    @Path("/createuser")
+    @Produces(MediaType.APPLICATION_JSON)
+    public User createUser(@HeaderParam("fName") String name, @HeaderParam("lName") String lName,
+                           @HeaderParam("pwd") String pwd, @HeaderParam("email") String email) {
+
+        return controllerService.createUser(name, lName, email, pwd);
+    }
 
 
     //TODO remember to verify token before every request except login/logout
