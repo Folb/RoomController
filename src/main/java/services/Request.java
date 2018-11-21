@@ -19,6 +19,12 @@ public abstract class Request {
         return con;
     }
 
+    static HttpURLConnection initPostRequest(URL url) throws IOException {
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("POST");
+        return con;
+    }
+
     static void logRequestCode(HttpURLConnection con) throws IOException {
         LOG.info("Sending '" + con.getRequestMethod() + "' to URL " + con.getURL());
         int responseCode = con.getResponseCode();
