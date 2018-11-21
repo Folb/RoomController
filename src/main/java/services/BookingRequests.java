@@ -23,6 +23,7 @@ public class BookingRequests extends Request {
         HttpURLConnection con = initGetRequest(url);
         logRequestCode(con);
         String response = readResponse(con);
+        con.disconnect();
 
         return JSONParser.parseBookingList(response);
     }
