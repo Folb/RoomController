@@ -4,11 +4,10 @@ package services;
 import models.AvailableRooms;
 import models.Booking;
 import models.Room;
+import models.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @ApplicationScoped
@@ -44,4 +43,18 @@ public class ControllerService {
 
     //TODO requests to services
 
+    public User getUser(long id){
+        try {
+            return LoginRequests.getUser(id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public String getToken(long id){
+        User user = getUser(id);
+        return null;
+    }
 }

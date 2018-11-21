@@ -1,8 +1,7 @@
 package controllers;
 
 import models.AvailableRooms;
-import models.Booking;
-import models.Room;
+import models.User;
 import org.jboss.logging.Logger;
 import org.wildfly.swarm.spi.runtime.annotations.ConfigurationValue;
 import services.ControllerService;
@@ -12,8 +11,9 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import java.util.List;
+import javax.ws.rs.core.MediaType;
 
 @Path("/")
 @ApplicationScoped
@@ -29,8 +29,6 @@ public class IndexController {
 
     private static final Logger LOG = Logger.getLogger(IndexController.class.getName());
 
-
-
     @GET
     @Path("str")
     @Produces("plain/text")
@@ -44,6 +42,22 @@ public class IndexController {
     public AvailableRooms getAllAvailableRooms() {
         return controllerService.getAvailableRoomTimes();
     }
+
+    @GET
+    @Path("/user/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public User findById(@PathParam("id") long id) {
+        return controllerService.getUser(id);
+    }
+
+    @GET
+    @Path("/user/{id}/token")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getToken(@PathParam("id") long id) {
+        return controllerService.getToken(id);
+    }
+
+
 
     //TODO remember to verify token before every request except login/logout
     //TODO get available times
