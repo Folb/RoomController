@@ -88,7 +88,7 @@ public class ControllerService {
         return false;
     }
 
-    public User createUser(String name, String lName, String email, String pwd){
+    public User createUser(String name, String lName, String pwd, String email){
         try {
             return LoginRequests.createUser(name, lName, email, pwd);
         } catch (IOException e) {

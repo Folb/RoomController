@@ -39,10 +39,7 @@ public class LoginRequests extends Request{
 
         String response = sendRequest(BASE_URL + VERIFY, map, "POST");
 
-        if(response != null)
-            return response.equals("true");
-        else
-            return null;
+        return response != null ? response.equals("true") : null;
     }
 
     public static String login(String email, String pwd) throws IOException {
@@ -51,10 +48,7 @@ public class LoginRequests extends Request{
         map.put("pwd", pwd);
         String response = sendRequest(BASE_URL + LOG_IN, map, "POST");
 
-        if(response != null)
-            return JSONParser.parseToken(response);
-        else
-            return null;
+        return response != null ? JSONParser.parseToken(response) : null;
     }
 
     public static boolean logout(String email, String token) throws IOException {
@@ -63,10 +57,7 @@ public class LoginRequests extends Request{
         map.put("token", token);
         String response = sendRequest(BASE_URL + LOG_OUT, map, "POST");
 
-        if(response != null)
-            return response.equals("true");
-        else
-            return false;
+        return response != null && response.equals("true");
     }
 
     public static User createUser(String name, String lName, String pwd, String email) throws IOException {
@@ -78,10 +69,7 @@ public class LoginRequests extends Request{
 
         String response = sendRequest(BASE_URL + CREATE_USER, map, "POST");
 
-        if(response != null)
-            return JSONParser.parseUser(response);
-        else
-            return null;
+        return response != null ? JSONParser.parseUser(response) : null;
     }
 
     public static String sendRequest(String urlAsString, Map<String, String> headers, String method) throws IOException {
