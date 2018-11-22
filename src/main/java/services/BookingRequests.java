@@ -6,7 +6,9 @@ import utils.JSONParser;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BookingRequests extends Request {
 
@@ -14,7 +16,7 @@ public class BookingRequests extends Request {
     private static final String BASE_URL = "http://localhost:8080/";
     private static final String ALL = "all";
     private static final String IS_BOOKED = "isBooked/";
-    private static final String BOOK_ROOM = "bookRoom";
+    private static final String BOOK_ROOM = "bookRoom/";
     private static final String USER = "user/";
     private static final String BOOKINGS = "/bookings";
 
@@ -28,10 +30,21 @@ public class BookingRequests extends Request {
         return JSONParser.parseBookingList(response);
     }
 
-    public static Booking bookRoom() throws IOException {
-        URL url = new URL(BASE_URL + USER);
+    public static Booking bookRoom(String roomId, String userId, String startDate, String endDate) throws IOException {
+        URL url = new URL(BASE_URL + BOOK_ROOM + roomId);
         HttpURLConnection con = initPostRequest(url);
-        con.
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("userId", userId);
+        headers.put("startDate", startDate);
+        headers.put("endDate", endDate);
+        headers.keySet().forEach((key) -> con.setRequestProperty(key, headers.get(key)));
+
+        logRequestCode(con);
+        String response = readResponse(con);
+        con.disconnect();
+
+        return JSONParser.parseBooking(response);
     }
 
 }

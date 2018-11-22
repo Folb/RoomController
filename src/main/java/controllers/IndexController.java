@@ -1,16 +1,19 @@
 package controllers;
 
 import models.AvailableRooms;
+import models.Booking;
 import models.User;
 import org.jboss.logging.Logger;
 import org.wildfly.swarm.spi.runtime.annotations.ConfigurationValue;
 import services.ControllerService;
+import utils.Parser;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.time.LocalDateTime;
 
 @Path("/")
 @ApplicationScoped
@@ -82,6 +85,17 @@ public class IndexController {
                            @HeaderParam("pwd") String pwd, @HeaderParam("email") String email) {
 
         return controllerService.createUser(name, lName, email, pwd);
+    }
+
+    @POST
+    @Path("user/{id}/bookRoom")
+    @Produces("application/json")
+    public Booking bookRoom(@PathParam("id") String id,
+                            @HeaderParam("roomId") String roomId,
+                            @HeaderParam("startDate") String startDate,
+                            @HeaderParam("endDate") String endDate) {
+
+        return controllerService.bookRoom(roomId, id, startDate, endDate);
     }
 
 

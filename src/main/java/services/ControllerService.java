@@ -8,6 +8,7 @@ import models.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ApplicationScoped
@@ -16,6 +17,16 @@ public class ControllerService {
     public List<Booking> getAllBookings()  {
         try {
             return BookingRequests.getAllBookings();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public Booking bookRoom(String roomId, String userId, String startDate, String endDate) {
+        try {
+            return BookingRequests.bookRoom(roomId, userId, startDate, endDate);
         } catch (IOException e) {
             e.printStackTrace();
         }

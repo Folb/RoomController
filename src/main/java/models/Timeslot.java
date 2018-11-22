@@ -29,6 +29,6 @@ public class Timeslot {
     }
 
     public boolean isWithinTimeslot(LocalDateTime s) {
-        return this.startDate.isBefore(s) && this.endDate.isBefore(s);
+        return this.startDate.isBefore(s) && this.endDate.isAfter(s);
     }
 }
